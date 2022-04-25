@@ -204,15 +204,19 @@ kubectl --kubeconfig=./capi-aws-quickstart.kubeconfig get pods -A
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
+### Setup ArgoCD to track changes in dev/
+```
+kubectl apply -f cluster-capa-argocd.yaml  
+```
 #### Access ArgoCD API server
+The initial password for the `admin` account is auto-generated and stored as clear text in the field password in a secret named `argocd-initial-admin-secret` in your Argo CD installation namespace.
+```
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+```
 By default, the Argo CD API server is not exposed with an external IP. Let's expose it via Port Forwarding. **In a new terminal window** execute the following command.
 ```
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
-The initial password for the `admin` account is auto-generated and stored as clear text in the field password in a secret named `argocd-initial-admin-secret` in your Argo CD installation namespace.
-```
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-```
 The ArgoCD API server can then be accessed using the `localhost:8080` and `admin` and the `password` from the command above.
 
