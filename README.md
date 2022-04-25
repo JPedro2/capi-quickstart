@@ -183,7 +183,7 @@ serviceaccount/calico-kube-controllers created
 ```
 Once the CNI is deployed you can watch the control plane and worker nodes becoming available and ready.
 ```
-watch --kubeconfig=./capi-aws-quickstart.kubeconfig get nodes
+watch kubectl --kubeconfig=./capi-aws-quickstart.kubeconfig get nodes
 ```
 ```
 NAME                                         STATUS   ROLES                  AGE     VERSION
